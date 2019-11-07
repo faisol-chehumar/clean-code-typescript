@@ -1,43 +1,37 @@
 # clean-code-typescript [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Clean%20Code%20Typescript&url=https://github.com/labs42io/clean-code-typescript)
 
-Clean Code concepts adapted for TypeScript.  
-Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript).
+Clean Code คอนเซ็ปสำหรับ TypeScript
+โดยได้แรงบันดาลใจจาก [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript).
 
-## Table of Contents
+## สารบัญ
 
-  1. [Introduction](#introduction)
-  2. [Variables](#variables)
-  3. [Functions](#functions)
-  4. [Objects and Data Structures](#objects-and-data-structures)
-  5. [Classes](#classes)
+  1. [บทนำ](#introduction)
+  2. [ตัวแปร (variable)](#variables)
+  3. [ฟังก์ชัน (function)](#functions)
+  4. [ออบเจ็คและโครงสร้างข้อมูล (Objects and Data Structures)](#objects-and-data-structures)
+  5. [คลาส (class)](#classes)
   6. [SOLID](#solid)
-  7. [Testing](#testing)
+  7. [เทส (testing)](#testing)
   8. [Concurrency](#concurrency)
-  9. [Error Handling](#error-handling)
-  10. [Formatting](#formatting)
-  11. [Comments](#comments)
-  12. [Translations](#translations)
+  9. [การจัดการกับข้อผิดพลาด (Error Handling)](#error-handling)
+  10. [การจัดรูปแบบ (Formatting)](#formatting)
+  11. [คอมเมนต์ (Comments)](#comments)
+  12. [ฉบับแปล](#translations)
 
-## Introduction
+## บทนำ
 
 ![Humorous image of software quality estimation as a count of how many expletives
 you shout when reading code](https://www.osnews.com/images/comics/wtfm.jpg)
 
-Software engineering principles, from Robert C. Martin's book
-[*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882),
-adapted for TypeScript. This is not a style guide. It's a guide to producing
-[readable, reusable, and refactorable](https://github.com/ryanmcdermott/3rs-of-software-architecture) software in TypeScript.
+หลักการของ Software engineering จากหนังสือของ Robert C. Martin
+[*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
+สำหรับ TypeScript นี่ไม่ใช่ Style Guide แต่เป็นแนวทางสำหรับสร้าง
+[readable, reusable และ refactorable Software](https://github.com/ryanmcdermott/3rs-of-software-architecture)  ด้วยภาษา TypeScript
 
-Not every principle herein has to be strictly followed, and even fewer will be
-universally agreed upon. These are guidelines and nothing more, but they are
-ones codified over many years of collective experience by the authors of
-*Clean Code*.
+ไม่ใช่ทุกหลักการในที่นี้ ที่คุณจะต้องนำไปปฏิบัติตามอย่างเคร่งครัด  มันเป็นเพียงแค่แนวทาง ที่เกิดจากสั่งสมประสบการณ์มาหลายปีของผู้เขียนหนังสือ
+*Clean Code* เท่านั้น
 
-Our craft of software engineering is just a bit over 50 years old, and we are
-still learning a lot. When software architecture is as old as architecture
-itself, maybe then we will have harder rules to follow. For now, let these
-guidelines serve as a touchstone by which to assess the quality of the
-TypeScript code that you and your team produce.
+งาน software engineering นั้นเพิ่งเกิดขึ้นมาได้ประมาณ 50 ปี และเรายังมีสิ่งที่ยังคงต้องเรียนรู้อีกมากมาย ดังนั้นเมื่อ software architecture ที่เราใช้เริ่มเก่า บางทีการที่จะทำตามมาตรฐาน architecture เก่าๆ ก็อาจจะเป็นสิ่งที่ยากในตอนนี้ ดังนั้นเราสามารถนำ Guidelines อันนี้ มาใช้เป็นแนวทางในการกำหนดมาตรฐานการเขียนโค้ดของเราและทีมด้วยภาษา Type Script ได้
 
 One more thing: knowing these won't immediately make you a better software
 developer, and working with them for many years doesn't mean you won't make
@@ -50,9 +44,9 @@ improvement. Beat up the code instead!
 
 ## Variables
 
-### Use meaningful variable names
+### ตั้งชื่อ variable ให้สื่อความหมาย
 
-Distinguish names in such a way that the reader knows what the differences offer.
+ตั้งชื่อตัวแปรโดยให้ผู้ที่มาอ่านทีหลังสามารถเข้าใจได้ว่าตัวแปรนี้มีความหมายว่าอะไร
 
 **Bad:**
 
@@ -73,9 +67,9 @@ function between<T>(value: T, left: T, right: T): boolean {
 
 **[⬆ back to top](#table-of-contents)**
 
-### Use pronounceable variable names
+### ตั้งชื่อ variable ในแบบที่สามารถอ่านออกเสียงได้
 
-If you can’t pronounce it, you can’t discuss it without sounding like an idiot.
+ถ้าคุณไม่สามารถออกเสียงชื่อตัวแปรได้ คุณจะไม่สามารถสื่อสารกับคนอื่นๆ ได้
 
 **Bad:**
 
@@ -99,11 +93,12 @@ type Customer = {
 
 **[⬆ back to top](#table-of-contents)**
 
-### Use the same vocabulary for the same type of variable
+### ตั้งชื่อ variable ให้เหมือนกัน ถ้า variable นั้นเป็นชนิดเดียวกันทำหน้าที่เหมือนกัน
 
 **Bad:**
 
 ```ts
+// 3 ฟังก์ชั่นนี้ทั้งหมดทำหน้าที่เดียวกันหมด มีเพียงแค่ชื่อที่ต่างกัน
 function getUserInfo(): User;
 function getUserDetails(): User;
 function getUserData(): User;
@@ -112,26 +107,27 @@ function getUserData(): User;
 **Good:**
 
 ```ts
+// เหลือชื่อเดียวลดความสับสนของคนที่มาอ่านโค้ดได้
 function getUser(): User;
 ```
 
 **[⬆ back to top](#table-of-contents)**
 
-### Use searchable names
+### ตั้งชื่อให้สามารถค้นหาได้
 
-We will read more code than we will ever write. It's important that the code we do write is readable and searchable. By *not* naming variables that end up being meaningful for understanding our program, we hurt our readers. Make your names searchable. Tools like [TSLint](https://palantir.github.io/tslint/rules/no-magic-numbers/) can help identify unnamed constants.
+เราใช้เวลาในการอ่านโค้ดมากกว่าการเขียนโค้ด ดังนั้นการตั้งชื่อตัวแปรให้สามารถอ่านได้และค้นหาได้จึงเป็นเรื่องที่สำคัญ เครื่องมืออย่าง [TSLint](https://palantir.github.io/tslint/rules/no-magic-numbers/) สามารถช่วยเราระบุได้ว่าค่า constant ตรงไหนที่เรายังไม่ได้กำหนดชื่อตัวแปรไว้
 
 **Bad:**
 
 ```ts
-// What the heck is 86400000 for?
+// 86400000 นี่มันคืออะไรเนี่ย?
 setTimeout(restart, 86400000);
 ```
 
 **Good:**
 
 ```ts
-// Declare them as capitalized named constants.
+// ประกาศค่าคงที่แบบนี้ทำให้เราอ่านง่ายและค้นหาได้ง่าย
 const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000;
 
 setTimeout(restart, MILLISECONDS_IN_A_DAY);
@@ -139,13 +135,13 @@ setTimeout(restart, MILLISECONDS_IN_A_DAY);
 
 **[⬆ back to top](#table-of-contents)**
 
-### Use explanatory variables
+### ใช้ variables ที่สามารถอธิบายตัวเองได้
 
 **Bad:**
 
 ```ts
 declare const users: Map<string, User>;
-
+// เราไม่มีทางรู้ว่า keyValue นั้นมีค่าเป็นอะไร
 for (const keyValue of users) {
   // iterate through users map
 }
@@ -155,7 +151,7 @@ for (const keyValue of users) {
 
 ```ts
 declare const users: Map<string, User>;
-
+// เรารู้ว่า keyValue นั้นจริงๆ แล้วมีค่าเป็น [id, user]
 for (const [id, user] of users) {
   // iterate through users map
 }
@@ -163,9 +159,9 @@ for (const [id, user] of users) {
 
 **[⬆ back to top](#table-of-contents)**
 
-### Avoid Mental Mapping
+### หลีกเลี่ยงการคาดเดาความหมาย
 
-Explicit is better than implicit.  
+ความชัดเจนนั้นดีกว่าความคลุมเครือ
 *Clarity is king.*
 
 **Bad:**
@@ -173,7 +169,7 @@ Explicit is better than implicit.
 ```ts
 const u = getUser();
 const s = getSubscription();
-const t = charge(u, s);
+const t = charge(u, s); // u กับ s คืออะไร ต้องเดาเอาเอง?
 ```
 
 **Good:**
@@ -181,14 +177,14 @@ const t = charge(u, s);
 ```ts
 const user = getUser();
 const subscription = getSubscription();
-const transaction = charge(user, subscription);
+const transaction = charge(user, subscription); // เข้าใจได้ตรงๆ ไม่ต้องเดา
 ```
 
 **[⬆ back to top](#table-of-contents)**
 
-### Don't add unneeded context
+### อย่าเพิ่มบริบทโดยไม่จำเป็น
 
-If your class/type/object name tells you something, don't repeat that in your variable name.
+ถ้าหากว่าคุณมีชื่อ class/type/object ที่บอกคุณอยู่แล้วว่ามันคืออะไร ก็ไม่จำเป็นที่จะต้องตั้งชื่อตัวแปรซ้ำลงไปอีก
 
 **Bad:**
 
@@ -200,6 +196,7 @@ type Car = {
 }
 
 function print(car: Car): void {
+  // ชื่อตัวแปรดูซ้ำซ้อนโดยไม่จำเป็น
   console.log(`${car.carMake} ${car.carModel} (${car.carColor})`);
 }
 ```
@@ -220,9 +217,9 @@ function print(car: Car): void {
 
 **[⬆ back to top](#table-of-contents)**
 
-### Use default arguments instead of short circuiting or conditionals
+### กำหนดค่า default ให้ argument แทนการใช้ short circuiting หรือ conditionals
 
-Default arguments are often cleaner than short circuiting.
+Default arguments นั้นทำให้โค้ดคลีนกว่าการใช้ short circuiting
 
 **Bad:**
 
@@ -243,14 +240,16 @@ function loadPages(count: number = 10) {
 
 **[⬆ back to top](#table-of-contents)**
 
-### Use enum to document the intent
+### ใช้ enum สำหรับกำหนดค่าคงที่ ที่เป็นกลุ่มเดียวกันได้
 
-Enums can help you document the intent of the code. For example when we are concerned about values being
-different rather than the exact value of those.
+Enums ช่วยให้คุณสามารถกำหนดกลุ่มของค่าคงที่ได้ ใช้ในตอนที่เราสนใจว่าค่าคงที่นั้นๆ มีความหมายที่แตกต่างกันอย่างไร มากกว่าที่จะใจว่าค่าเป็นเท่าไหร่
 
 **Bad:**
 
 ```ts
+// หากเราใช้ Object แบบนี้ในการกำหนดหลุ่มของค่าคงที่
+// เราอาจทำการเปลี่ยนแปลงค่าของมันโดยไม่ตั้งใจได้
+// เช่น GENRE.ROMANTIC = 'drama'
 const GENRE = {
   ROMANTIC: 'romantic',
   DRAMA: 'drama',
@@ -265,7 +264,7 @@ class Projector {
   configureFilm(genre) {
     switch (genre) {
       case GENRE.ROMANTIC:
-        // some logic to be executed 
+        // some logic to be executed
     }
   }
 }
@@ -274,6 +273,8 @@ class Projector {
 **Good:**
 
 ```ts
+// หากเราใช้ ENUM ในการกำหนดหลุ่มของค่าคงที่
+// เราจะไม่สามารถเปลี่ยนค่าของตัวแปรได้เลย
 enum GENRE {
   ROMANTIC,
   DRAMA,
@@ -288,7 +289,7 @@ class Projector {
   configureFilm(genre) {
     switch (genre) {
       case GENRE.ROMANTIC:
-        // some logic to be executed 
+        // some logic to be executed
     }
   }
 }
@@ -298,25 +299,21 @@ class Projector {
 
 ## Functions
 
-### Function arguments (2 or fewer ideally)
+### ฟังก์ชันอะกิวเมนต์( (ควรมีแค่ 2 หรือน้อยกว่าจะดีที่สุด)
 
-Limiting the amount of function parameters is incredibly important because it makes testing your function easier.
-Having more than three leads to a combinatorial explosion where you have to test tons of different cases with each separate argument.  
+การจำกัดจำนวนพารามิเตอร์ของฟังก์ชันเป็นเรื่องที่สำคัญ เพราะว่าจำนวนพารามิเตอร์ที่น้อยจะทำให้คุณเขียนเทสได้ง่ายกว่าฟังก์ชันที่มีจำนวนพารามิเตอร์เยอะ จำนวนพารามิเตอร์มากกว่า 3 ก็ทำให้เขียนเทสได้ยากแล้ว
 
-One or two arguments is the ideal case, and three should be avoided if possible. Anything more than that should be consolidated.
-Usually, if you have more than two arguments then your function is trying to do too much.
-In cases where it's not, most of the time a higher-level object will suffice as an argument.  
+พารามิเตอร์ 1 หรือ 2 ตัวเป็นจำนวนที่เหมาะสม 3 ตัวในกรณีที่หลีกเลี่ยงไม่ได้ ส่วนจำนวนที่มากกว่านี้ไม่ควรมีเลย โดยทั่วไปถ้าคุณมีจำนวนอะกิวเมนต์มากกว่า 2 นั่นหมายความว่าฟัวก์ชันนั้นทำงานหลายอย่างเกินไป ในกรณีที่ไม่ใช่การทำงานหลายอย่าง
 
-Consider using object literals if you are finding yourself needing a lot of arguments.  
+ในกรณีต้องต้องส่งอะกิวเมนต์เป็นจำนวนมากให้ส่งไปแบบ Object
 
-To make it obvious what properties the function expects, you can use the [destructuring](https://basarat.gitbooks.io/typescript/docs/destructuring.html) syntax.
-This has a few advantages:
+ในการที่จะทำให้เห็นได้ว่าฟังก์ชันมีการเรียกใช้อะไรบ้างนั้น คุณสามารถใช้เทคนิค [destructuring](https://basarat.gitbooks.io/typescript/docs/destructuring.html) ได้ และนี่คือข้อดีของการใช้ destructuring syntax:
 
-1. When someone looks at the function signature, it's immediately clear what properties are being used.
+1. เมื่อใครก็ตามมาอ่านโค้ดสามารถเข้าใจได้ทันทีว่ามี properties อะไรบ้างที่ถูกใช้งาน
 
-2. Destructuring also clones the specified primitive values of the argument object passed into the function. This can help prevent side effects. Note: objects and arrays that are destructured from the argument object are NOT cloned.
+2. Destructuring จะทำการโคลน primitive values ของออบเจ็คอะกิวเมนต์และส่งเข้าไปในฟังก์ชัน ทำให้ป้องกันการเกิด Side Effect ได้
 
-3. TypeScript warns you about unused properties, which would be impossible without destructuring.
+3. TypeScript จะทำการเตือนหากมี properties ที่ไม่ถูกใช้งาน
 
 **Bad:**
 
@@ -343,7 +340,7 @@ createMenu({
 });
 ```
 
-You can further improve readability by using [type aliases](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-aliases):
+คุณสามารถปรับปรุง readability ของโค้ดได้ด้วยการใช้ [type aliases](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-aliases):
 
 ```ts
 
@@ -363,9 +360,9 @@ createMenu({
 
 **[⬆ back to top](#table-of-contents)**
 
-### Functions should do one thing
+### ฟังก์ชันควรทำงานเพียงอย่างเดียว
 
-This is by far the most important rule in software engineering. When functions do more than one thing, they are harder to compose, test, and reason about. When you can isolate a function to just one action, they can be refactored easily and your code will read much cleaner. If you take nothing else away from this guide other than this, you'll be ahead of many developers.
+นี่เป็นกฎที่สำคัญที่สุดของ software engineering ถ้าฟังก์ชันทำงานมากกว่าหนึ่งอย่างแล้วคุณก็จะทดสอบมันได้ยาก แต่หากคุณเขียนแยกฟังก์ชันออกมาให้ทำงานเพียงแค่อย่างเดียว คุณก็จะสามารถ Refactor และอ่านโค้ดได้ง่าย
 
 **Bad:**
 
@@ -395,7 +392,7 @@ function isActiveClient(client: Client) {
 
 **[⬆ back to top](#table-of-contents)**
 
-### Function names should say what they do
+### การตั้งชื่อ Function ควรสื่อว่ามันทำอะไร
 
 **Bad:**
 
@@ -406,7 +403,7 @@ function addToDate(date: Date, month: number): Date {
 
 const date = new Date();
 
-// It's hard to tell from the function name what is added
+// ชื่อฟังก์ชันอันนี้เราไม่มีทางรู้เลยว่า Add อะไร
 addToDate(date, 1);
 ```
 
@@ -423,9 +420,9 @@ addMonthToDate(date, 1);
 
 **[⬆ back to top](#table-of-contents)**
 
-### Functions should only be one level of abstraction
+### ฟังก์ชันควรที่จะมีการ abstraction เพียงแค่ระดับเดียว
 
-When you have more than one level of abstraction your function is usually doing too much. Splitting up functions leads to reusability and easier testing.
+ถ้าฟังก์ชันของคุณมี abstraction มากกว่าหนึ่งระดับ นั่นหมายความว่าฟังก์ชันนั้นทำงานหลายอย่าง การแยกฟังก์ชันจะช่วยให้โค้ดอ่านง่ายและ reuse โค้ดได้มากขึ้น
 
 **Bad:**
 
@@ -491,18 +488,15 @@ function parse(tokens: Token[]): SyntaxTree {
 
 **[⬆ back to top](#table-of-contents)**
 
-### Remove duplicate code
+### ลบโค้ดที่ซ้ำกันออกไป
 
-Do your absolute best to avoid duplicate code.
-Duplicate code is bad because it means that there's more than one place to alter something if you need to change some logic.  
+หลีกเลี่ยงการเขียนโค้ดที่ซ้ำกันเพราะการที่โค้ดซ้ำกันนั่นหมายความว่า ถ้าคุณต้องการแก้อะไรบางอย่าง คุณจะต้องตามไปแก้ทุกที่ที่ซ้ำกับโค้ดตัวนี้
 
-Imagine if you run a restaurant and you keep track of your inventory: all your tomatoes, onions, garlic, spices, etc.
-If you have multiple lists that you keep this on, then all have to be updated when you serve a dish with tomatoes in them.
-If you only have one list, there's only one place to update!  
-
-Oftentimes you have duplicate code because you have two or more slightly different things, that share a lot in common, but their differences force you to have two or more separate functions that do much of the same things. Removing duplicate code means creating an abstraction that can handle this set of different things with just one function/module/class.  
+ในหลายๆครั้ง คุณทำการคัดลอกโค้ดเพราะว่ามันมีส่วนของการทำงานที่แตกต่างกันเล็กน้อย โดยส่วนที่เหลือเหมือนกันหมด สิ่งที่แตกต่างเล็กน้อยนั้นทำให้คุณต้องสร้างฟังก์ชันขึ้นมาใหม่ทั้งๆ ที่มันทำงานแทบจะเหมือนกัน การลบโค้ดที่ซ้ำออกไปคือการที่คุณจะต้องสร้าง abstraction ที่สามารถจัดการส่วนที่แตกต่างกันให้ทำงานอยู่ภายใต้ function/module/class เดียวกันได้
 
 Getting the abstraction right is critical, that's why you should follow the [SOLID](#solid) principles. Bad abstractions can be worse than duplicate code, so be careful! Having said this, if you can make a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself updating multiple places anytime you want to change one thing.
+
+การสร้าง abstraction ที่ถูกต้องนั้นเป็นเรื่องที่สำคัญ นั่นเป็นเหตุผลว่าทำไมคุณถึงต้องทำตามหลักการ [SOLID](#solid) เพราะว่า Bad Practice นั้นแย่กว่าการมีโค้ดที่ซ้ำกันเสียอีก ดังนั้นจงระวังเรื่องนี้ไว้ด้วย หากคุณสามารถสร้าง abstraction ที่ดีได้ ก็จงทำมันต่อไป Don't repeat yourself เมื่อไหร่ก็ตามที่คุณต้องแก้ไขการทำงานของฟังก์ชันในหลายๆ ที่ นั่นคือเวลาที่คุณจะต้องเปลี่ยนให้เหลือแค่ฟังก์ชันเดียว
 
 **Bad:**
 
@@ -578,11 +572,12 @@ function showEmployeeList(employee: Developer | Manager) {
 }
 ```
 
-You should be critical about code duplication. Sometimes there is a tradeoff between duplicated code and increased complexity by introducing unnecessary abstraction. When two implementations from two different modules look similar but live in different domains, duplication might be acceptable and preferred over extracting the common code. The extracted common code in this case introduces an indirect dependency between the two modules.
+คุณควรให้ความสำคัญกับเรื่องการจัดการโค้ดซ้ำซ้อนกันเพราะบางทีคุณก็ต้องแลกการกำจัดโค้ดที่ซ้ำซ้อนด้วยการ abstract การทำงานของมัน ผลที่ตามมาคือบางครั้งโค้ดของเราก็จะซับซ้อนมากขึ้น แต่หากว่าโค้ดที่ดูเหมือนจะซ้ำกันนั้นอยู่คนละ Domain กันในบางครั้งเราก็สามารถยอมรับและปล่อยมันไว้แบบนั้นได้ ในกรณีนี้หากเราทำการรวมโค้ดไว้ที่จุดเดียวจะกลายเป็นการเพิ่ม Dependency ระหว่าง 2 โมดูลแทน
 
 **[⬆ back to top](#table-of-contents)**
 
-### Set default objects with Object.assign or destructuring
+
+### Set ค่า Default ของออบเจ็คด้วย Object.assign หรือ destructuring
 
 **Bad:**
 
@@ -632,15 +627,13 @@ function createMenu({ title = 'Foo', body = 'Bar', buttonText = 'Baz', cancellab
 createMenu({ body: 'Bar' });
 ```
 
-To avoid any side effects and unexpected behavior by passing in explicitly the `undefined` or `null` value, you can tell the TypeScript compiler to not allow it.
-See [`--strictNullChecks`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#--strictnullchecks) option in TypeScript.
+เพื่อหลีกเลี่ยงการเกิดปัญหา Side Effect จากการโยนค่าตัวแปรเป็น `null` หรือ `undefined` คุณสามารถบอกให้ Type Script Compiler ห้ามการส่งค่าเหล่านี้ได้ ดูที่ [`--strictNullChecks`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#--strictnullchecks) option ใน TypeScript
 
 **[⬆ back to top](#table-of-contents)**
 
-### Don't use flags as function parameters
+### อย่าใช้ Flags เป็นพารามิเตอร์ของฟังก์ชัน
 
-Flags tell your user that this function does more than one thing.
-Functions should do one thing. Split out your functions if they are following different code paths based on a boolean.
+การมีพารามิเตอร์ประเภท Flags ในฟังก์ชัน หมายความว่ามันทำงานมมากกว่าหนึ่งอย่าง คุณควรแยกฟังก์ชันออกมาหากมันมีการทำงานที่ต่างกันตาม Flags แต่ละตัว
 
 **Bad:**
 
@@ -668,16 +661,16 @@ function createFile(name: string) {
 
 **[⬆ back to top](#table-of-contents)**
 
-### Avoid Side Effects (part 1)
+### หลีกเลี่ยงการสร้าง Side Effect (ส่วนแรก 1)
 
-A function produces a side effect if it does anything other than take a value in and return another value or values.
-A side effect could be writing to a file, modifying some global variable, or accidentally wiring all your money to a stranger.  
+ฟังก์ชันจะสร้าง Side Effect ถ้าเกิดมันทำบางสิ่งที่นอกเหนือจากการรับค่าเข้าไปและรีเทิร์นอีกค่าหนึ่งออกมา
+Side Effect สามารถเป็นได้ทั้งการเขียนไฟล์ เปลี่ยนแปลงค่าตัวแปรแบบ Global
 
-Now, you do need to have side effects in a program on occasion. Like the previous example, you might need to write to a file.
-What you want to do is to centralize where you are doing this. Don't have several functions and classes that write to a particular file.
-Have one service that does it. One and only one.  
+ในขณะที่หากคุณจำเป็นต้องมีส่วนของ Side Effect ในโปรแกรมเหมือนตัวอย่างข้างต้น อย่างเช่นบางครั้งคุณก็จำเป็นต้องเขียนไฟล์ สิ่งที่คุณจะต้องทำคือการรวบรวมฟังก์ชันที่ทำให้เกิด Side Effect ไว้ให้อยู่ในจุดเดียวกัน ไม่ควรที่จะมีหลายฟังก์ชัน หลายคลาส ที่ทำหน้าที่เขียนไฟล์ สร้างมันขึ้นมาใช้และทำให้แน่ใจว่ามันมีเพียงแค่ Service เดียวเท่านั้น
 
 The main point is to avoid common pitfalls like sharing state between objects without any structure, using mutable data types that can be written to by anything, and not centralizing where your side effects occur. If you can do this, you will be happier than the vast majority of other programmers.
+
+จุดที่สำคัญคือการหลีกเลี่ยงข้อผิดพลาดโดยทั่วไปอย่างเช่นการแชร์ State ระหว่างออบเจ็ค การใช้ตัวแปรแบบ Mutable ที่สามารถถูกเขียนค่าทับลงไปจากที่ไหนก็ได้
 
 **Bad:**
 
@@ -712,11 +705,11 @@ console.log(name);
 
 ### Avoid Side Effects (part 2)
 
-In JavaScript, primitives are passed by value and objects/arrays are passed by reference. In the case of objects and arrays, if your function makes a change in a shopping cart array, for example, by adding an item to purchase, then any other function that uses that `cart` array will be affected by this addition. That may be great, however it can be bad too. Let's imagine a bad situation:  
+In JavaScript, primitives are passed by value and objects/arrays are passed by reference. In the case of objects and arrays, if your function makes a change in a shopping cart array, for example, by adding an item to purchase, then any other function that uses that `cart` array will be affected by this addition. That may be great, however it can be bad too. Let's imagine a bad situation:
 
-The user clicks the "Purchase", button which calls a `purchase` function that spawns a network request and sends the `cart` array to the server. Because of a bad network connection, the purchase function has to keep retrying the request. Now, what if in the meantime the user accidentally clicks "Add to Cart" button on an item they don't actually want before the network request begins? If that happens and the network request begins, then that purchase function will send the accidentally added item because it has a reference to a shopping cart array that the `addItemToCart` function modified by adding an unwanted item.  
+The user clicks the "Purchase", button which calls a `purchase` function that spawns a network request and sends the `cart` array to the server. Because of a bad network connection, the purchase function has to keep retrying the request. Now, what if in the meantime the user accidentally clicks "Add to Cart" button on an item they don't actually want before the network request begins? If that happens and the network request begins, then that purchase function will send the accidentally added item because it has a reference to a shopping cart array that the `addItemToCart` function modified by adding an unwanted item.
 
-A great solution would be for the `addItemToCart` to always clone the `cart`, edit it, and return the clone. This ensures that no other functions that are holding onto a reference of the shopping cart will be affected by any changes.  
+A great solution would be for the `addItemToCart` to always clone the `cart`, edit it, and return the clone. This ensures that no other functions that are holding onto a reference of the shopping cart will be affected by any changes.
 
 Two caveats to mention to this approach:
 
@@ -1037,7 +1030,7 @@ inventoryTracker('apples', req, 'www.inventory-awesome.io');
 
 ### Use iterators and generators
 
-Use generators and iterables when working with collections of data used like a stream.  
+Use generators and iterables when working with collections of data used like a stream.
 There are some good reasons:
 
 - decouples the callee from the generator implementation in a sense that callee decides how many
@@ -1086,9 +1079,9 @@ function* fibonacci(): IterableIterator<number> {
 function print(n: number) {
   let i = 0;
   for (const fib of fibonacci()) {
-    if (i++ === n) break;  
+    if (i++ === n) break;
     console.log(fib);
-  }  
+  }
 }
 
 // Print first 10 Fibonacci numbers.
@@ -1104,7 +1097,7 @@ import itiriri from 'itiriri';
 
 function* fibonacci(): IterableIterator<number> {
   let [a, b] = [0, 1];
- 
+
   while (true) {
     yield a;
     [a, b] = [b, a + b];
@@ -1186,14 +1179,14 @@ account.balance = 100;
 
 ### Make objects have private/protected members
 
-TypeScript supports `public` *(default)*, `protected` and `private` accessors on class members.  
+TypeScript supports `public` *(default)*, `protected` and `private` accessors on class members.
 
 **Bad:**
 
 ```ts
 class Circle {
   radius: number;
-  
+
   constructor(radius: number) {
     this.radius = radius;
   }
@@ -1229,7 +1222,7 @@ class Circle {
 
 ### Prefer immutability
 
-TypeScript's type system allows you to mark individual properties on an interface / class as *readonly*. This allows you to work in a functional way (unexpected mutation is bad).  
+TypeScript's type system allows you to mark individual properties on an interface / class as *readonly*. This allows you to work in a functional way (unexpected mutation is bad).
 For more advanced scenarios there is a built-in type `Readonly` that takes a type `T` and marks all of its properties as readonly using mapped types (see [mapped types](https://www.typescriptlang.org/docs/handbook/advanced-types.html#mapped-types)).
 
 **Bad:**
@@ -1327,7 +1320,7 @@ result.value = 200; // error
 
 ### type vs. interface
 
-Use type when you might need a union or intersection. Use interface when you want `extends` or `implements`. There is no strict rule however, use the one that works for you.  
+Use type when you might need a union or intersection. Use interface when you want `extends` or `implements`. There is no strict rule however, use the one that works for you.
 For a more detailed explanation refer to this [answer](https://stackoverflow.com/questions/37233735/typescript-interfaces-vs-types/54101543#54101543) about the differences between `type` and `interface` in TypeScript.
 
 **Bad:**
@@ -1430,10 +1423,10 @@ class Dashboard {
 ### High cohesion and low coupling
 
 Cohesion defines the degree to which class members are related to each other. Ideally, all fields within a class should be used by each method.
-We then say that the class is *maximally cohesive*. In practice, this however is not always possible, nor even advisable. You should however prefer cohesion to be high.  
+We then say that the class is *maximally cohesive*. In practice, this however is not always possible, nor even advisable. You should however prefer cohesion to be high.
 
-Coupling refers to how related or dependent are two classes toward each other. Classes are said to be low coupled if changes in one of them doesn't affect the other one.  
-  
+Coupling refers to how related or dependent are two classes toward each other. Classes are said to be low coupled if changes in one of them doesn't affect the other one.
+
 Good software design has **high cohesion** and **low coupling**.
 
 **Bad:**
@@ -1509,8 +1502,8 @@ class UserNotifier {
 
 ### Prefer composition over inheritance
 
-As stated famously in [Design Patterns](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four, you should *prefer composition over inheritance* where you can. There are lots of good reasons to use inheritance and lots of good reasons to use composition. The main point for this maxim is that if your mind instinctively goes for inheritance, try to think if composition could model your problem better. In some cases it can.  
-  
+As stated famously in [Design Patterns](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four, you should *prefer composition over inheritance* where you can. There are lots of good reasons to use inheritance and lots of good reasons to use composition. The main point for this maxim is that if your mind instinctively goes for inheritance, try to think if composition could model your problem better. In some cases it can.
+
 You might be wondering then, "when should I use inheritance?" It depends on your problem at hand, but this is a decent list of when inheritance makes more sense than composition:
 
 1. Your inheritance represents an "is-a" relationship and not a "has-a" relationship (Human->Animal vs. User->UserDetails).
@@ -1808,8 +1801,8 @@ class HttpRequester {
 
 ### Liskov Substitution Principle (LSP)
 
-This is a scary term for a very simple concept. It's formally defined as "If S is a subtype of T, then objects of type T may be replaced with objects of type S (i.e., objects of type S may substitute objects of type T) without altering any of the desirable properties of that program (correctness, task performed, etc.)." That's an even scarier definition.  
-  
+This is a scary term for a very simple concept. It's formally defined as "If S is a subtype of T, then objects of type T may be replaced with objects of type S (i.e., objects of type S may substitute objects of type T) without altering any of the desirable properties of that program (correctness, task performed, etc.)." That's an even scarier definition.
+
 The best explanation for this is if you have a parent class and a child class, then the parent class and child class can be used interchangeably without getting incorrect results. This might still be confusing, so let's take a look at the classic Square-Rectangle example. Mathematically, a square is a rectangle, but if you model it using the "is-a" relationship via inheritance, you quickly get into trouble.
 
 **Bad:**
@@ -1940,8 +1933,8 @@ interface SmartPrinter {
 class AllInOnePrinter implements SmartPrinter {
   print() {
     // ...
-  }  
-  
+  }
+
   fax() {
     // ...
   }
@@ -1954,8 +1947,8 @@ class AllInOnePrinter implements SmartPrinter {
 class EconomicPrinter implements SmartPrinter {
   print() {
     // ...
-  }  
-  
+  }
+
   fax() {
     throw new Error('Fax not supported.');
   }
@@ -1984,8 +1977,8 @@ interface Scanner {
 class AllInOnePrinter implements Printer, Fax, Scanner {
   print() {
     // ...
-  }  
-  
+  }
+
   fax() {
     // ...
   }
@@ -2012,8 +2005,8 @@ This principle states two essential things:
 
 2. Abstractions should not depend upon details. Details should depend on abstractions.
 
-This can be hard to understand at first, but if you've worked with Angular, you've seen an implementation of this principle in the form of Dependency Injection (DI). While they are not identical concepts, DIP keeps high-level modules from knowing the details of its low-level modules and setting them up. It can accomplish this through DI. A huge benefit of this is that it reduces the coupling between modules. Coupling is a very bad development pattern because it makes your code hard to refactor.  
-  
+This can be hard to understand at first, but if you've worked with Angular, you've seen an implementation of this principle in the form of Dependency Injection (DI). While they are not identical concepts, DIP keeps high-level modules from knowing the details of its low-level modules and setting them up. It can accomplish this through DI. A huge benefit of this is that it reduces the coupling between modules. Coupling is a very bad development pattern because it makes your code hard to refactor.
+
 DIP is usually achieved by a using an inversion of control (IoC) container. An example of a powerful IoC container for TypeScript is [InversifyJs](https://www.npmjs.com/package/inversify)
 
 **Bad:**
@@ -2107,7 +2100,7 @@ Testing is more important than shipping. If you have no tests or an inadequate a
 Deciding on what constitutes an adequate amount is up to your team, but having 100% coverage (all statements and branches)
 is how you achieve very high confidence and developer peace of mind. This means that in addition to having a great testing framework, you also need to use a good [coverage tool](https://github.com/gotwarlost/istanbul).
 
-There's no excuse to not write tests. There are [plenty of good JS test frameworks](http://jstherightway.org/#testing-tools) with typings support for TypeScript, so find one that your team prefers. When you find one that works for your team, then aim to always write tests for every new feature/module you introduce. If your preferred method is Test Driven Development (TDD), that is great, but the main point is to just make sure you are reaching your coverage goals before launching any feature, or refactoring an existing one.  
+There's no excuse to not write tests. There are [plenty of good JS test frameworks](http://jstherightway.org/#testing-tools) with typings support for TypeScript, so find one that your team prefers. When you find one that works for your team, then aim to always write tests for every new feature/module you introduce. If your preferred method is Test Driven Development (TDD), that is great, but the main point is to just make sure you are reaching your coverage goals before launching any feature, or refactoring an existing one.
 
 ### The three laws of TDD
 
@@ -2223,7 +2216,7 @@ describe('Calendar', () => {
 
 ### Prefer promises vs callbacks
 
-Callbacks aren't clean, and they cause excessive amounts of nesting *(the callback hell)*.  
+Callbacks aren't clean, and they cause excessive amounts of nesting *(the callback hell)*.
 There are utilities that transform existing functions using the callback style to a version that returns promises
 (for Node.js see [`util.promisify`](https://nodejs.org/dist/latest-v8.x/docs/api/util.html#util_util_promisify_original), for general purpose see [pify](https://www.npmjs.com/package/pify), [es6-promisify](https://www.npmjs.com/package/es6-promisify))
 
@@ -2274,15 +2267,15 @@ function downloadPage(url: string, saveTo: string): Promise<string> {
 
 downloadPage('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', 'article.html')
   .then(content => console.log(content))
-  .catch(error => console.error(error));  
+  .catch(error => console.error(error));
 ```
 
-Promises supports a few helper methods that help make code more conscise:  
+Promises supports a few helper methods that help make code more conscise:
 
-| Pattern                  | Description                                |  
-| ------------------------ | -----------------------------------------  |  
-| `Promise.resolve(value)` | Convert a value into a resolved promise.   |  
-| `Promise.reject(error)`  | Convert an error into a rejected promise.  |  
+| Pattern                  | Description                                |
+| ------------------------ | -----------------------------------------  |
+| `Promise.resolve(value)` | Convert a value into a resolved promise.   |
+| `Promise.reject(error)`  | Convert an error into a rejected promise.  |
 | `Promise.all(promises)`  |Returns a new promise which is fulfilled with an array of fulfillment values for the passed promises or rejects with the reason of the first promise that rejects. |
 | `Promise.race(promises)`|Returns a new promise which is fulfilled/rejected with the result/error of the first settled promise from the array of passed promises. |
 
@@ -2309,7 +2302,7 @@ function downloadPage(url: string, saveTo: string): Promise<string> {
 
 downloadPage('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', 'article.html')
   .then(content => console.log(content))
-  .catch(error => console.error(error));  
+  .catch(error => console.error(error));
 ```
 
 **Good:**
@@ -2345,10 +2338,10 @@ execution on the current stack, killing the process (in Node), and notifying you
 
 ### Always use Error for throwing or rejecting
 
-JavaScript as well as TypeScript allow you to `throw` any object. A Promise can also be rejected with any reason object.  
+JavaScript as well as TypeScript allow you to `throw` any object. A Promise can also be rejected with any reason object.
 It is advisable to use the `throw` syntax with an `Error` type. This is because your error might be caught in higher level code with a `catch` syntax.
 It would be very confusing to catch a string message there and would make
-[debugging more painful](https://basarat.gitbooks.io/typescript/docs/types/exceptions.html#always-use-error).  
+[debugging more painful](https://basarat.gitbooks.io/typescript/docs/types/exceptions.html#always-use-error).
 For the same reason you should reject promises with `Error` types.
 
 **Bad:**
@@ -2382,7 +2375,7 @@ async function get(): Promise<Item[]> {
 ```
 
 The benefit of using `Error` types is that it is supported by the syntax `try/catch/finally` and implicitly all errors have the `stack` property which
-is very powerful for debugging.  
+is very powerful for debugging.
 There are also another alternatives, not to use the `throw` syntax and instead always return custom error objects. TypeScript makes this even easier.
 Consider following example:
 
@@ -2484,7 +2477,7 @@ try {
 
 ## Formatting
 
-Formatting is subjective. Like many rules herein, there is no hard and fast rule that you must follow. The main point is *DO NOT ARGUE* over formatting. There are tons of tools to automate this. Use one! It's a waste of time and money for engineers to argue over formatting. The general rule to follow is *keep consistent formatting rules*.  
+Formatting is subjective. Like many rules herein, there is no hard and fast rule that you must follow. The main point is *DO NOT ARGUE* over formatting. There are tons of tools to automate this. Use one! It's a waste of time and money for engineers to argue over formatting. The general rule to follow is *keep consistent formatting rules*.
 
 For TypeScript there is a powerful tool called [TSLint](https://palantir.github.io/tslint/). It's a static analysis tool that can help you improve dramatically the readability and maintainability of your code. There are ready to use TSLint configurations that you can reference in your projects:
 
@@ -2540,7 +2533,7 @@ type Animal = { /* ... */ }
 type Container = { /* ... */ }
 ```
 
-Prefer using `PascalCase` for class, interface, type and namespace names.  
+Prefer using `PascalCase` for class, interface, type and namespace names.
 Prefer using `camelCase` for variables, functions and class members.
 
 **[⬆ back to top](#table-of-contents)**
@@ -2717,8 +2710,8 @@ import { UserService } from '@services/UserService';
 ## Comments
 
 The use of a comments is an indication of failure to express without them. Code should be the only source of truth.
-  
-> Don’t comment bad code—rewrite it.  
+
+> Don’t comment bad code—rewrite it.
 > — *Brian W. Kernighan and P. J. Plaugher*
 
 ### Prefer self explanatory code instead of comments
@@ -2797,7 +2790,7 @@ function combine(a: number, b: number): number {
 
 ### Avoid positional markers
 
-They usually just add noise. Let the functions and variable names along with the proper indentation and formatting give the visual structure to your code.  
+They usually just add noise. Let the functions and variable names along with the proper indentation and formatting give the visual structure to your code.
 Most IDE support code folding feature that allows you to collapse/expand blocks of code (see Visual Studio Code [folding regions](https://code.visualstudio.com/updates/v1_17#_folding-regions)).
 
 **Bad:**
@@ -2861,9 +2854,9 @@ class Client {
 
 When you find yourself that you need to leave notes in the code for some later improvements,
 do that using `// TODO` comments. Most IDE have special support for those kind of comments so that
-you can quickly go over the entire list of todos.  
+you can quickly go over the entire list of todos.
 
-Keep in mind however that a *TODO* comment is not an excuse for bad code. 
+Keep in mind however that a *TODO* comment is not an excuse for bad code.
 
 **Bad:**
 
@@ -2889,7 +2882,7 @@ function getActiveSubscriptions(): Promise<Subscription[]> {
 
 This is also available in other languages:
 - ![br](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Brazil.png) **Brazilian Portuguese**: [vitorfreitas/clean-code-typescript](https://github.com/vitorfreitas/clean-code-typescript)
-- ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinese**: 
+- ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinese**:
   - [beginor/clean-code-typescript](https://github.com/beginor/clean-code-typescript)
   - [pipiliang/clean-code-typescript](https://github.com/pipiliang/clean-code-typescript)
 - ![ja](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Japan.png) **Japanese**: [MSakamaki/clean-code-typescript](https://github.com/MSakamaki/clean-code-typescript)
@@ -2898,6 +2891,6 @@ There is work in progress for translating this to other languages:
 
 - ![kr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/South-Korea.png) Korean
 
-References will be added once translations are completed.  
+References will be added once translations are completed.
 Check this [discussion](https://github.com/labs42io/clean-code-typescript/issues/15) for more details and progress.
 You can make an indispensable contribution to *Clean Code* community by translating this to your language.
